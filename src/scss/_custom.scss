@@ -1,0 +1,123 @@
+/* styles */
+@import url("https://fonts.googleapis.com/css2?family=Barlow:wght@300;500;700&display=swap");
+
+body {
+  background-image: linear-gradient(#8eb5cd, #e3ecf3);
+  font-family: "Barlow", sans-serif;
+  -ms-overflow-style: none;
+  overflow-y: scroll;
+}
+
+.main {
+  margin-bottom: 100px;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+h2 {
+  font-weight: 700;
+}
+
+.w-icon {
+  width: 50%;
+  height: auto;
+}
+
+.hourly-weather-icon .daily-weather-icon {
+  width: 10%;
+  height: auto;
+}
+
+.weather-data-rows {
+  border: 1px solid rgba(217, 220, 223, 0.8);
+}
+
+.minmaxtemp {
+  padding-bottom: 15px;
+}
+
+#temperature {
+  font-size: 62pt;
+  font-weight: 600;
+}
+
+.units {
+  font-size: 20pt;
+  font-weight: 200;
+  color: rgb(145, 145, 145);
+  margin: 0;
+}
+
+.sunits {
+  font-size: 9pt;
+  font-weight: 200;
+  color: rgb(145, 145, 145);
+  margin: 0;
+}
+
+.datetime {
+  font-size: 14pt;
+  margin-top: 15px;
+}
+
+.weather-container {
+  border-top: 10px solid #1d3557;
+  box-shadow: 5px 5px 5px #7a90a8;
+  background-color: white;
+}
+
+.more-info {
+  flex-basis: 25%;
+}
+
+.weather-value {
+  color: #4a9e2e;
+  font-weight: 700;
+}
+
+//Loader Starts
+.lds-hourglass {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin-left: 50%;
+}
+.lds-hourglass:after {
+  content: " ";
+  display: block;
+  border-radius: 50%;
+  width: 0;
+  height: 0;
+  margin: 8px;
+  box-sizing: border-box;
+  border: 32px solid #fff;
+  border-color: #fff transparent #fff transparent;
+  animation: lds-hourglass 1.2s infinite;
+}
+@keyframes lds-hourglass {
+  0% {
+    transform: rotate(0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+  50% {
+    transform: rotate(900deg);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  100% {
+    transform: rotate(1800deg);
+  }
+}
+// Loader Ends
+
+//Customized Bootstrap
+$primary: #1d3557;
+$secondary: #457b9d;
+$success: #4a9e2e;
+$info: #a7dadc;
+$warning: #fbdbdd;
+$danger: #f5a3a9;
+$light: #ffffff;
+$dark: #05090f;

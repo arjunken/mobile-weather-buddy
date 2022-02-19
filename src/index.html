@@ -1,0 +1,225 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>City Weather App</title>
+  </head>
+  <body>
+    <div class="main container col-12 col-md-6">
+      <div class="weatherheader d-flex flex-column">
+        <h2 class="city-title text-center mt-4 text-light"></h2>
+        <p class="current-loc text-center text-light"></p>
+        <form class="getlocation form-group">
+          <select
+            class="country form-control form-select mb-3"
+            name="country"
+            aria-label="country select drop-down menu"
+          ></select>
+          <input
+            class="form-control border-light mb-3"
+            type="text"
+            name="zipcode"
+            placeholder="Enter Zip/PIN Code (First 3 letters only for alpha-numeric codes)"
+          />
+          <button type="submit" class="btn btn-primary form-control disabled">Find Me</button>
+          <p class="apifailed text-light mt-2"></p>
+        </form>
+      </div>
+
+      <!-- Tabs content -->
+      <ul class="nav nav-pills mb-3 d-flex flex-row justify-content-center p-2" id="pills-tab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link active"
+            id="pills-rightnow-tab"
+            data-bs-toggle="pill"
+            data-bs-target="#rightnow"
+            type="button"
+            role="tab"
+            aria-controls="rightnow"
+            aria-selected="true"
+          >
+            Right Now
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="pills-hourly-tab"
+            data-bs-toggle="pill"
+            data-bs-target="#hourly"
+            type="button"
+            role="tab"
+            aria-controls="hourly"
+            aria-selected="false"
+          >
+            Hourly
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="pills-daily-tab"
+            data-bs-toggle="pill"
+            data-bs-target="#daily"
+            type="button"
+            role="tab"
+            aria-controls="daily"
+            aria-selected="false"
+          >
+            Daily
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="pills-settings-tab"
+            data-bs-toggle="pill"
+            data-bs-target="#settings"
+            type="button"
+            role="tab"
+            aria-controls="settings"
+            aria-selected="false"
+          >
+            Settings
+          </button>
+        </li>
+      </ul>
+      <div class="lds-hourglass"></div>
+      <div class="tab-content d-none" id="pills-tabContent">
+        <div class="tab-pane fade show active" id="rightnow" role="tabpanel" aria-labelledby="today-tab">
+          <div class="weather-container d-flex flex-column">
+            <div class="datetime text-center"></div>
+            <div class="current-conditions pt-2">
+              <div class="row">
+                <div class="col-sm d-flex flex-column justify-content-between m-2">
+                  <p class="current-temp m-auto">
+                    <span id="temperature" class="weather-value"></span>
+                  </p>
+                  <div class="minmaxtemp text-center"></div>
+                  <p class="feelslike-temp m-auto"></p>
+                </div>
+
+                <div class="col-sm d-flex flex-column justify-content-between m-2">
+                  <img src="#" class="w-icon m-auto" />
+                  <p class="current-cond m-auto">Conditions</p>
+                </div>
+                <div class="weather-alert text-center p-2 text-danger">Alerts Go Here</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Accordion for Additional Information Display -->
+
+          <div class="accordion accordion-flush mt-3" id="accordionFlushExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-headingOne">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#flush-collapseOne"
+                  aria-expanded="false"
+                  aria-controls="flush-collapseOne"
+                >
+                  More Information
+                </button>
+              </h2>
+              <div
+                id="flush-collapseOne"
+                class="accordion-collapse collapse"
+                aria-labelledby="flush-headingOne"
+                data-bs-parent="#accordionFlushExample"
+              >
+                <div class="accordion-body d-flex flex-row justify-content-evenly more-info flex-wrap"></div>
+              </div>
+            </div>
+            <div class="accordion-item accordion-alert">
+              <h2 class="accordion-header" id="flush-headingTwo">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#flush-collapseTwo"
+                  aria-expanded="false"
+                  aria-controls="flush-collapseTwo"
+                >
+                  Weather Alerts
+                </button>
+              </h2>
+              <div
+                id="flush-collapseTwo"
+                class="accordion-collapse collapse"
+                aria-labelledby="flush-headingTwo"
+                data-bs-parent="#accordionFlushExample"
+              >
+                <div class="accordion-alert-body accordion-body"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Accordion Ends here -->
+        </div>
+        <div class="tab-pane fade" id="hourly" role="tabpanel" aria-labelledby="pills-hourly-tab">
+          <div class="weather-container d-flex flex-column">
+            <div class="hourly-weather-data"></div>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="daily" role="tabpanel" aria-labelledby="pills-daily-tab">
+          <div class="weather-container d-flex flex-column">
+            <div class="daily-weather-data"></div>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="pills-settings-tab">
+          <div class="weather-container d-flex flex-column">
+            <div class="daily-weather-data">
+              <div class="setting-container m-3">
+                <!-- Temperature units -->
+                <div class="d-flex flex-row">
+                  <p class="me-auto p-2 g-2">Temperature Units</p>
+                  <div class="p-2">
+                    <input type="radio" id="centigrade" name="tunits" value="c" />
+                    <label for="centigrade">°C</label>
+                  </div>
+                  <div class="p-2">
+                    <input type="radio" id="farht" name="tunits" value="f" />
+                    <label for="farht">°F</label>
+                  </div>
+                </div>
+                <!-- Distance Units -->
+                <div class="d-flex flex-row">
+                  <p class="me-auto p-2">Distance Units</p>
+                  <div class="p-2">
+                    <input type="radio" id="meters" name="dunits" value="mt" />
+                    <label for="meters">Meters</label>
+                  </div>
+                  <div class="p-2">
+                    <input type="radio" id="feet" name="dunits" value="ft" />
+                    <label for="feet">Feet</label>
+                  </div>
+                </div>
+                <!-- Reset Home Location -->
+                <div class="d-flex flex-row p-2 justify-content-between">
+                  <button class="btn btn-warning" type="submit" id="reset-home">Reset Home Location</button>
+                  <button class="btn btn-success" type="submit" id="save-settings">Save Settings</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer mt-auto py-3 bg-light fixed-bottom">
+      <div class="container text-center">
+        <span class="text-muted"
+          >© 2022 Copyright: arjunken.com | Powered by: Javascript, PHP, OpenWeatherMap API
+        </span>
+      </div>
+    </footer>
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/date-fns/1.30.1/date_fns.min.js" integrity="sha512-F+u8eWHrfY8Xw9BLzZ8rG/0wIvs0y+JyRJrXjp3VjtFPylAEEGwKbua5Ip/oiVhaTDaDs4eU2Xtsxjs/9ag2bQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+  </body>
+</html>
