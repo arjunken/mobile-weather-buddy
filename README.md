@@ -19,13 +19,13 @@ _API Data_: A free account with OpenWeatherMap API. Apps pulls out data based on
 1. First clone this repository to your local directory by running the below command using Git.
 
 ```bash
-git clone https://github.com/arjunken/City-Weather-App.git
+git clone https://github.com/arjunken/Mobile-Weather-Buddy.git
 ```
 
 2. Change the directory
 
 ```bash
-cd City-Weather-App
+cd Mobile-Weather-Buddy
 ```
 
 3. Run node package manager command to install dependencies.
@@ -36,7 +36,7 @@ npm install
 
 4. Rename config file from `config_example.php` to `config.php`
 
-5. Visit [Accuweather API](https://developer.accuweather.com/apis) and create an account to get your API KEY. Once you sign in your account, you will have to _Add a Project_ to get your API KEY.
+5. Visit [OpenWeatherMap API](https://openweathermap.org/api) and create an account to get your API KEY. Once you sign in your account, you will have to _Add a Project_ to get your API KEY.
 
 6. Open up config.php in your favorite code editor and replace the key string with your key.
 
@@ -50,4 +50,4 @@ npm run build
 
 #### Here is the link to [Demo version](https://arjunken.com/projects/cwa/)
 
-![App Screenshot](https://arjunken.com/wp-content/uploads/2022/01/cwa-e1641798430269.png)
+![App Screenshot](https://arjunken.com/wp-content/uploads/2022/02/cwa-screenshot.png)
