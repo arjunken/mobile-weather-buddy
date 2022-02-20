@@ -33,8 +33,8 @@ const displayCurrentWeatherData = cwdata => {
     dunit_speed: "kmph"
   };
 
-  if (localStorage.getItem("Units")) {
-    const units = JSON.parse(localStorage.getItem("Units"));
+  if (localStorage.getItem("Settings")) {
+    const units = JSON.parse(localStorage.getItem("Settings"));
     if (units.tunit == "f") {
       default_units.tfactor = 9 / 5;
       default_units.icept = 32;

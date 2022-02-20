@@ -26,19 +26,25 @@ $("#reset-home").on("click", e => {
 });
 
 //Update Settings Data
-if (localStorage.getItem("Units")) {
-  const units = JSON.parse(localStorage.getItem("Units"));
-  if (units.tunit == "f") {
+if (localStorage.getItem("Settings")) {
+  const settings = JSON.parse(localStorage.getItem("Settings"));
+  if (settings.location == "home") {
+    $("#athome").attr("checked", true);
+  } else {
+    $("#mobile").attr("checked", true);
+  }
+  if (settings.tunit == "f") {
     $("#farht").attr("checked", true);
   } else {
     $("#centigrade").attr("checked", true);
   }
-  if (units.dunit == "ft") {
+  if (settings.dunit == "ft") {
     $("#feet").attr("checked", true);
   } else {
     $("#meters").attr("checked", true);
   }
 } else {
+  $("#mobile").attr("checked", true);
   $("#centigrade").attr("checked", true);
   $("#meters").attr("checked", true);
 }
@@ -46,21 +52,16 @@ if (localStorage.getItem("Units")) {
 $("#save-settings").on("click", e => {
   e.preventDefault();
   const changedSettings = {
+    location: $('input[name="location"]:checked').val(),
     tunit: $('input[name="tunits"]:checked').val(),
     dunit: $('input[name="dunits"]:checked').val()
   };
-  localStorage.setItem("Units", JSON.stringify(changedSettings));
+  localStorage.setItem("Settings", JSON.stringify(changedSettings));
   location.reload();
 });
 
 //Global URLS
 const countryJsonURL = "./server/country_codes.json";
-
-//Tooltip initialization
-var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-  return new bootstrap.Tooltip(tooltipTriggerEl);
-});
 
 //Check Locally Stored Data. Store only what you need.
 const homeLocation = JSON.parse(localStorage.getItem("HomeLocation"));
@@ -102,12 +103,18 @@ if (!homeLocation) {
               lon: data.lon.toFixed(2)
             };
             localStorage.setItem("HomeLocation", JSON.stringify(homeLocation));
-            if (!localStorage.getItem("Units")) {
-              localStorage.setItem("Units", JSON.stringify({ tunit: "C", dunit: "mt" }));
+            if (!localStorage.getItem("Settings")) {
+              localStorage.setItem("Settings", JSON.stringify({ location: "current", tunit: "C", dunit: "mt" }));
             }
             homeLocation = JSON.parse(localStorage.getItem("HomeLocation"));
             getLocDH.remove();
             $(".nav").removeClass("d-none");
+            if (localStorage.getItem("Settings")) {
+              let locsetting = JSON.parse(localStorage.getItem("Settings"));
+              if (locsetting.location != "home") {
+                getLocation();
+              }
+            }
             getLocation();
           })
           .catch(err => {
@@ -124,7 +131,12 @@ if (!homeLocation) {
 } else {
   getLocDH.remove();
   $(".nav").removeClass("d-none");
-  getLocation();
+  if (localStorage.getItem("Settings")) {
+    let locsetting = JSON.parse(localStorage.getItem("Settings"));
+    if (locsetting.location != "home") {
+      getLocation();
+    }
+  }
 }
 
 //Get the permission for location tracking from the user
@@ -134,6 +146,7 @@ const options = {
   maximumAge: 0
 };
 
+//Check User location
 function getLocation() {
   $(".city-title").text("Allow this app to get your location..");
   if (navigator.geolocation) {
@@ -154,9 +167,9 @@ const getWeatherPageData = (lat, lon) => {
       //Check Away from or At Home Location
       let homeLocation = JSON.parse(localStorage.getItem("HomeLocation"));
       if (Math.abs(lat - homeLocation.lat) <= 0.5 && Math.abs(lon - homeLocation.lon) <= 0.5) {
-        $(".current-loc").text("(At Home)");
+        $(".current-loc").text("(Home Location)");
       } else {
-        $(".current-loc").text("(Away From Home)");
+        $(".current-loc").text("(Current Location)");
       }
     })
     .catch(err => {
@@ -174,6 +187,15 @@ const getWeatherPageData = (lat, lon) => {
       console.log("Error Receiving Weather Data from OpenWeather: " + err.message);
     });
 };
+
+//Display weather based on user's settings
+if (localStorage.getItem("Settings") && localStorage.getItem("HomeLocation")) {
+  let locsetting = JSON.parse(localStorage.getItem("Settings"));
+  if (locsetting.location == "home") {
+    let homeloc = JSON.parse(localStorage.getItem("HomeLocation"));
+    getWeatherPageData(homeloc.lat, homeloc.lon);
+  }
+}
 
 function onMove(position) {
   $(".city-title").text("Finding your location...");
